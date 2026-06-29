@@ -2,10 +2,15 @@
 
 A LARP and theatrical prop compass with a real magnetic sensor, physical servo-driven needle, and a wireless control interface. Built around a Seeed XIAO ESP32-C3, it runs its own WiFi access point — no internet connection required. The controller connects from any phone or tablet to switch modes and set bearings in real time. The player sees only the needle.
 
-![The Lost Compass](assets/Compass.jpeg)
-![The Lost Compass](assets/Compass_side.jpeg)
-![The Lost Compass](assets/Compass_closed.jpeg)
-![The Lost Compass](assets/Interface.png)
+<a href="assets/Compass.jpeg">
+  <img src="assets/Compass.jpeg" width="400">
+</a>
+<a href="assets/Compass_side.jpeg">
+  <img src="assets/Compass_side.jpeg" width="400">
+</a>
+<a href="assets/Compass_closed.jpeg">
+  <img src="assets/Compass_closed.jpeg" width="400">
+</a>
 
 Full technical reference is in [`docs/Compass_tech_reference.html`](docs/Compass_tech_reference.html).
 
