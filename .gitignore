@@ -31,6 +31,3 @@ fp-info-cache
 
 # VS Code (if using as editor alongside Arduino IDE)
 .vscode/
-
-# Assets not yet added
-_assets/

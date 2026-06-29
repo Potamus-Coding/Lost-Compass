@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Lost Compass — Controller Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment:  #f0e3c0;
+    --parchment2: #e8d9ac;
+    --ink:        #1c0e00;
+    --ink-mid:    #3d2200;
+    --brass:      #8b6200;
+    --brass-lt:   #b8860b;
+    --cream:      #faf3e0;
+  }
+
+  body {
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    background: var(--parchment);
+    color: var(--ink);
+    width: 210mm;
+    min-height: 297mm;
+    padding: 7mm 13mm 6mm;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ── HEADER ─────────────────────────── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    gap: 7mm;
+    margin-bottom: 3mm;
+    padding-bottom: 3mm;
+    border-bottom: 1.5px solid var(--brass);
+  }
+
+  .rose-wrap {
+    flex-shrink: 0;
+    width: 41mm;
+    height: 41mm;
+  }
+
+  .header-text {
+    flex: 1;
+    padding-top: 1.5mm;
+  }
+
+  .eyebrow {
+    font-size: 7pt;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 1mm;
+  }
+
+  .title {
+    font-family: 'IM Fell English', 'Palatino Linotype', serif;
+    font-size: 26pt;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 1mm;
+    letter-spacing: 0.01em;
+  }
+
+  .subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 10pt;
+    color: var(--brass);
+    margin-bottom: 2mm;
+    letter-spacing: 0.04em;
+  }
+
+  .header-rule {
+    border: none;
+    border-top: 1px solid var(--brass);
+    margin-bottom: 1.5mm;
+    opacity: 0.5;
+  }
+
+  .keep-from {
+    font-size: 7pt;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  /* ── SECTION ──────────────────────────── */
+  .section {
+    margin-bottom: 3mm;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 3mm;
+    margin-bottom: 2mm;
+  }
+
+  .section-label {
+    font-family: 'IM Fell English', serif;
+    font-size: 8.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    white-space: nowrap;
+  }
+
+  .rule {
+    flex: 1;
+    height: 0.5px;
+    background: var(--brass);
+    opacity: 0.55;
+  }
+
+  /* ── WHAT IT IS ───────────────────────── */
+  .what-text {
+    font-size: 9pt;
+    line-height: 1.45;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* ── MODES ────────────────────────────── */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5mm;
+  }
+
+  .mode-box {
+    background: var(--cream);
+    border: 1px solid var(--brass);
+    border-top: 2.5px solid var(--brass);
+    padding: 2mm 3mm;
+  }
+
+  .mode-tag {
+    font-size: 6.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass-lt);
+    margin-bottom: 0.5mm;
+  }
+
+  .mode-name {
+    font-family: 'IM Fell English', serif;
+    font-size: 11pt;
+    color: var(--ink);
+    margin-bottom: 1mm;
+    line-height: 1;
+  }
+
+  .mode-desc {
+    font-size: 7.5pt;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  /* ── WIRELESS ─────────────────────────── */
+  .wireless-block {
+    background: var(--cream);
+    border: 1px solid var(--brass);
+    padding: 2mm 4mm;
+  }
+
+  .wireless-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5mm 10mm;
+    margin-bottom: 2mm;
+  }
+
+  .w-item { display: flex; gap: 2mm; align-items: baseline; }
+
+  .w-key {
+    font-size: 6.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--brass);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .w-val {
+    font-family: 'Courier New', monospace;
+    font-size: 8.5pt;
+    color: var(--ink);
+    font-weight: bold;
+  }
+
+  .wireless-divider {
+    border: none;
+    border-top: 0.5px solid var(--brass);
+    opacity: 0.4;
+    margin-bottom: 1.5mm;
+  }
+
+  .pages-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5mm;
+  }
+
+  .page-box {
+    border: 0.5px solid rgba(139,98,0,0.45);
+    padding: 2mm 3mm;
+    background: rgba(255,250,240,0.6);
+  }
+
+  .page-name {
+    font-family: 'IM Fell English', serif;
+    font-size: 9pt;
+    color: var(--ink);
+    margin-bottom: 1mm;
+  }
+
+  .page-desc {
+    font-size: 7pt;
+    color: var(--ink-mid);
+    line-height: 1.35;
+  }
+
+  .no-internet-note {
+    font-size: 7pt;
+    color: var(--ink-mid);
+    font-style: italic;
+    margin-top: 2mm;
+    padding-top: 2mm;
+    border-top: 0.5px solid rgba(139,98,0,0.3);
+  }
+
+  /* ── CALIBRATION ─────────────────────── */
+  .cal-steps {
+    list-style: none;
+    counter-reset: cal;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+  }
+
+  .cal-steps li {
+    counter-increment: cal;
+    display: flex;
+    gap: 3mm;
+    font-size: 8.5pt;
+    line-height: 1.4;
+  }
+
+  .cal-num {
+    font-family: 'IM Fell English', serif;
+    font-size: 13pt;
+    color: var(--brass);
+    line-height: 1;
+    min-width: 4.5mm;
+    flex-shrink: 0;
+    margin-top: -1mm;
+  }
+
+  .cal-body strong {
+    color: var(--ink);
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .sleep-note {
+    margin-top: 2mm;
+    border-left: 2px solid var(--brass);
+    padding: 1.5mm 3mm;
+    background: rgba(139,98,0,0.05);
+    font-size: 7pt;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  /* ── FOOTER ──────────────────────────── */
+  .footer {
+    margin-top: 3mm;
+    padding-top: 2mm;
+    border-top: 1px solid var(--brass);
+    text-align: center;
+    font-size: 6.5pt;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  /* ── ORNAMENT ─────────────────────────── */
+  .ornament {
+    text-align: center;
+    color: var(--brass);
+    font-size: 10pt;
+    opacity: 0.5;
+    letter-spacing: 0.4em;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════ -->
+<div class="header">
+
+  <!-- Compass Rose SVG -->
+  <div class="rose-wrap">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <!-- Outer rings -->
+      <circle cx="100" cy="100" r="96" fill="none" stroke="#8b6200" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#8b6200" stroke-width="0.5" stroke-dasharray="3 5"/>
+
+      <!-- Degree ticks (every 10°) -->
+      <g stroke="#8b6200" stroke-width="0.7" opacity="0.5">
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(10,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(20,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(30,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(40,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(50,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(60,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(70,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(80,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(100,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(110,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(120,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(130,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(140,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(150,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(160,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(170,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(190,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(200,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(210,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(220,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(230,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(240,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(250,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(260,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(280,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(290,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(300,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(310,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(320,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(330,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(340,100,100)"/>
+        <line x1="100" y1="4" x2="100" y2="10" transform="rotate(350,100,100)"/>
+      </g>
+
+      <!-- Cardinal long points (8-point rose) -->
+      <!-- North - dark (prominent) -->
+      <polygon points="100,6 107,86 100,95 93,86" fill="#1c0e00"/>
+      <!-- South -->
+      <polygon points="100,194 107,114 100,105 93,114" fill="#8b6200"/>
+      <!-- East -->
+      <polygon points="194,100 114,107 105,100 114,93" fill="#8b6200"/>
+      <!-- West -->
+      <polygon points="6,100 86,107 95,100 86,93" fill="#8b6200"/>
+
+      <!-- Intercardinal shorter points -->
+      <polygon points="100,32 104.5,88 100,95 95.5,88" fill="#8b6200" opacity="0.75" transform="rotate(45,100,100)"/>
+      <polygon points="100,32 104.5,88 100,95 95.5,88" fill="#8b6200" opacity="0.75" transform="rotate(135,100,100)"/>
+      <polygon points="100,32 104.5,88 100,95 95.5,88" fill="#8b6200" opacity="0.75" transform="rotate(225,100,100)"/>
+      <polygon points="100,32 104.5,88 100,95 95.5,88" fill="#8b6200" opacity="0.75" transform="rotate(315,100,100)"/>
+
+      <!-- Centre -->
+      <circle cx="100" cy="100" r="10" fill="#f0e3c0" stroke="#8b6200" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="4"  fill="#1c0e00"/>
+
+      <!-- Cardinal labels -->
+      <text x="100" y="26" text-anchor="middle" dominant-baseline="middle"
+            font-family="'IM Fell English',Georgia,serif" font-size="17" fill="#1c0e00" font-weight="bold">N</text>
+      <text x="100" y="178" text-anchor="middle" dominant-baseline="middle"
+            font-family="'IM Fell English',Georgia,serif" font-size="13" fill="#1c0e00">S</text>
+      <text x="178" y="101" text-anchor="middle" dominant-baseline="middle"
+            font-family="'IM Fell English',Georgia,serif" font-size="13" fill="#1c0e00">E</text>
+      <text x="22"  y="101" text-anchor="middle" dominant-baseline="middle"
+            font-family="'IM Fell English',Georgia,serif" font-size="13" fill="#1c0e00">W</text>
+    </svg>
+  </div>
+
+  <!-- Title block -->
+  <div class="header-text">
+    <div class="eyebrow">Potamus Props &nbsp;&bull;&nbsp; Technical Reference</div>
+    <div class="title">The Lost Compass</div>
+    <div class="subtitle">Anno Domini MDCCCXXXIV &mdash; Navigator&rsquo;s Instrument</div>
+    <hr class="header-rule">
+    <div class="keep-from">For the hand behind the curtain</div>
+  </div>
+
+</div><!-- /header -->
+
+
+<!-- ═══ WHAT IT IS ════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">What It Is</span>
+    <div class="rule"></div>
+  </div>
+  <p class="what-text">
+    The Lost Compass is a prop instrument built around a QMC5883 magnetometer and a TS90D continuous-rotation servo. The servo drives a physical needle on a printed compass dial; the firmware tracks its position using a dead-reckoning model, calculating how far the needle has turned from known speed constants and elapsed time. The device runs as a standalone WiFi access point served by an ESP32-C3 microcontroller &mdash; no internet connection is required. Four operational modes govern the needle&rsquo;s behaviour, switchable in real time from any phone or tablet on the network.
+  </p>
+</div>
+
+
+<!-- ═══ MODES ══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">Modes of Comportment</span>
+    <div class="rule"></div>
+  </div>
+  <div class="modes-grid">
+
+    <div class="mode-box">
+      <div class="mode-tag">Normal</div>
+      <div class="mode-name">Free Needle</div>
+      <div class="mode-desc">Tracks genuine magnetic North via the onboard sensor. The needle moves as the prop is turned or handed between players. A calibrated offset corrects for the sensor&rsquo;s mounting angle within the housing.</div>
+    </div>
+
+    <div class="mode-box">
+      <div class="mode-tag">Fixed</div>
+      <div class="mode-name">Fixed Bearing</div>
+      <div class="mode-desc">The needle locks to a bearing you set &mdash; entered as degrees (0&ndash;359) or a cardinal direction. It holds that bearing regardless of how the prop is moved, tilted, or handed to another player.</div>
+    </div>
+
+    <div class="mode-box">
+      <div class="mode-tag">Search</div>
+      <div class="mode-name">Lazy Spin</div>
+      <div class="mode-desc">Slow, sweeping arcs with smooth easing. Suggests an uncertain or awakening instrument &mdash; the compass is seeking rather than knowing. Useful for first contact with an artefact or ambiguous navigation.</div>
+    </div>
+
+    <div class="mode-box">
+      <div class="mode-tag">Disturbance</div>
+      <div class="mode-name">Erratic Spin</div>
+      <div class="mode-desc">Rapid, unpredictable bursts of movement. Conveys a cursed, overwhelmed, or magically interfered instrument. The mechanical jerkiness is intentional and physical &mdash; it will be heard as well as seen.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══ WIRELESS ═══════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">The Wireless Instrument</span>
+    <div class="rule"></div>
+  </div>
+
+  <div class="wireless-block">
+    <div class="wireless-grid">
+      <div class="w-item">
+        <span class="w-key">Network&nbsp;(SSID)</span>
+        <span class="w-val">CompassControl</span>
+      </div>
+      <div class="w-item">
+        <span class="w-key">Passphrase</span>
+        <span class="w-val">compass123</span>
+      </div>
+      <div class="w-item">
+        <span class="w-key">Main&nbsp;Page</span>
+        <span class="w-val">http://192.168.4.1</span>
+      </div>
+      <div class="w-item">
+        <span class="w-key">Config&nbsp;Page</span>
+        <span class="w-val">http://192.168.4.1/config</span>
+      </div>
+    </div>
+
+    <hr class="wireless-divider">
+
+    <div class="pages-row">
+      <div class="page-box">
+        <div class="page-name">Main Instrument Page</div>
+        <div class="page-desc">Mode selection, fixed bearing entry, and Voltaic Reserve indicator (battery level). The in-scene control surface for the operator.</div>
+      </div>
+      <div class="page-box">
+        <div class="page-name">Instrument Correction &nbsp;(/config)</div>
+        <div class="page-desc">Heading offset, dead-reckoning bias, and dial initialisation. Linked from the main page footer.</div>
+      </div>
+    </div>
+
+    <div class="no-internet-note">
+      The Compass broadcasts its own network &mdash; no internet connection is provided or required. If the page will not load, disable mobile data on your device.
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ FIRST COMMISSION ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-label">First Commission &mdash; Calibration</span>
+    <div class="rule"></div>
+  </div>
+
+  <ol class="cal-steps">
+    <li>
+      <span class="cal-num">1</span>
+      <span class="cal-body"><strong>Power on.</strong> Open the sliding base lid on the bottom of the compass and move the power switch to On. Place the compass on a flat surface, then open the top lid.</span>
+    </li>
+    <li>
+      <span class="cal-num">2</span>
+      <span class="cal-body"><strong>Connect.</strong> Join the <em>CompassControl</em> network on a phone or laptop. Open <em>http://192.168.4.1/config</em> in a browser.</span>
+    </li>
+    <li>
+      <span class="cal-num">3</span>
+      <span class="cal-body"><strong>Face North.</strong> Using a phone compass as reference, orient the prop so it points to magnetic North &mdash; the hinges and dome of the lid should face North.</span>
+    </li>
+    <li>
+      <span class="cal-num">4</span>
+      <span class="cal-body"><strong>Tune the heading offset.</strong> <em>Optional &mdash; only required on first assembly or if the sensor has been remounted.</em> The config page shows a live compass rose. Use the &plusmn;5&deg; and &plusmn;15&deg; buttons to bring the virtual needle to 0&deg;. Adjust the software needle only &mdash; not the physical one. The offset is stored in flash and need not be repeated.</span>
+    </li>
+    <li>
+      <span class="cal-num">5</span>
+      <span class="cal-body"><strong>Home the physical needle.</strong> Rotate the physical dial needle by hand to point to the N mark on the compass face.</span>
+    </li>
+    <li>
+      <span class="cal-num">6</span>
+      <span class="cal-body"><strong>Initialize.</strong> Press <em>Initialise Dial</em> on the config page. This tells the firmware the physical needle is at 0&deg;, resetting the internal position tracker. The instrument is now commissioned.</span>
+    </li>
+	   <li>
+      <span class="cal-num">7</span>
+      <span class="cal-body"><strong>Operate.</strong> The compass starts in the Fixed Bearing mode so navigate back to the main control page and select the mode you want it to run in upon opening the lid. </span>
+    </li>
+  </ol>
+
+  <div class="sleep-note">
+    <strong>On sleep:</strong> closing the lid holds the needle position in memory &mdash; allow a few seconds for the network to restart on wake before reconnecting. A full power cycle requires only steps 5&ndash;6; the heading offset is stored in flash and survives restarts.
+  </div>
+</div>
+
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════ -->
+<div class="footer">
+  Potamus Props &nbsp;&bull;&nbsp; The Lost Compass &nbsp;&bull;&nbsp; Seeed XIAO ESP32-C3 &nbsp;&bull;&nbsp; QMC5883 &middot; TS90D
+</div>
+
+</body>
+</html>
